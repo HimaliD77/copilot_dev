@@ -7,6 +7,10 @@ applyTo: 'db/**/*.ts,src/lib/*.ts'
 
 The app's data lives in a local SQLite database accessed through **Drizzle ORM** over Node.js's built-in `node:sqlite` driver. It is consumed at **build time** from Astro page frontmatter — there is no runtime API server. Schema changes are managed with **drizzle-kit** migrations.
 
+Follow the repository-wide rules in [`coding-standards.instructions.md`](coding-standards.instructions.md):
+comments should explain intent rather than restate code, and exported functions
+must have TSDoc/JSDoc documentation.
+
 ## Layout
 
 - `db/schema.ts` — Drizzle table definitions (`publishers`, `categories`, `games`) and inferred row types. The single source of truth for the schema.
@@ -48,6 +52,22 @@ import { games } from '../../db/schema';
 export async function getAllGameIds(db: Database): Promise<number[]> {
   const rows = await db.select({ id: games.id }).from(games).orderBy(asc(games.title));
   return rows.map((r) => r.id);
+}
+```
+
+- Document every exported function in `db/` and `src/lib/` with a TSDoc/JSDoc
+  comment that explains its purpose, `db` and other parameters, and return
+  value. For example:
+
+```ts
+/**
+ * Return every game ordered by title for deterministic static generation.
+ *
+ * @param db Drizzle database connection used for the query.
+ * @returns Games mapped to the application-facing shape.
+ */
+export async function getAllGames(db: Database): Promise<Game[]> {
+  // ...
 }
 ```
 

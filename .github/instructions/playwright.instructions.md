@@ -5,6 +5,10 @@ applyTo: '**/*.spec.ts'
 
 # Test Writing Guidelines
 
+Apply the repository-wide commenting and TypeScript rules in
+[`coding-standards.instructions.md`](coding-standards.instructions.md). Keep
+test comments focused on non-obvious browser behavior or test intent.
+
 ## Code Quality Standards
 
 - **Locators**: Prioritize user-facing, role-based locators (`getByRole`, `getByLabel`, `getByText`, etc.) for resilience and accessibility. Use `test.step()` to group interactions and improve test readability and reporting.

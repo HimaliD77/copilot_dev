@@ -49,7 +49,18 @@ Refer to technology-specific instruction files:
 - Create reusable components for common UI patterns
 - Keep components focused on a single responsibility
 - Use props for configuration, not duplication
-- Document component APIs with TypeScript types
+- Document each reusable component's `Props` interface and every prop with
+  concise comments that explain the component contract, optionality, and
+  defaults.
+
+### Comments and TypeScript
+
+- Comment why a UI decision or workaround is needed; don't comment obvious
+  markup or repeat a Tailwind class's effect.
+- Keep comments current as the component changes. Delete comments that no
+  longer describe the implementation.
+- Follow the shared TypeScript formatting and typing rules in
+  [`coding-standards.instructions.md`](coding-standards.instructions.md).
 
 ## Development Workflow
 
