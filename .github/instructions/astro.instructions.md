@@ -5,6 +5,10 @@ applyTo: '**/*.astro'
 
 # Astro Component Instructions
 
+Follow the repository-wide rules in [`coding-standards.instructions.md`](coding-standards.instructions.md):
+comments should explain intent rather than restate markup or code, and reusable
+components must document their public props.
+
 ## Astro Component Patterns
 
 Astro handles everything in the UI: pages, layouts, components, routing, and content. The site is **fully prerendered** (`output: 'static'`) — there is no client-side UI framework and no separate API server. Pages read data **directly in frontmatter** at build time via the Drizzle/Node SQLite data-access helpers in `src/lib/`.
@@ -19,7 +23,9 @@ import GameCard from '../components/GameCard.astro';
 import { getDatabase } from '../lib/db';
 import { getAllGames } from '../lib/games';
 
+/** Props configure the page heading displayed by this layout. */
 interface Props {
+  /** Text rendered in the document title. */
   title: string;
 }
 
@@ -109,7 +115,9 @@ There is no Svelte/React layer. When a page genuinely needs client behaviour, ad
 ## TypeScript
 
 - Use TypeScript for type-safe props
-- Define `Props` interface in frontmatter
+- Define a `Props` interface in frontmatter for every reusable component and
+  document the interface and each prop's purpose, optionality, and defaults.
+  Keep the documentation next to the interface.
 - Type component imports and helper return values
 - Run `npx astro sync` to (re)generate route/content types before linting or type-checking
 - `.astro` files are type-checked by `npm run typecheck:astro` (which runs `astro sync` then `astro check`), on the classic `typescript` package. The pure TypeScript in `db/`, `src/lib/`, and `src/types/` is type-checked separately by `npm run typecheck` (the native TS 7 compiler, `tsgo`), which does **not** process `.astro` files.
@@ -120,3 +128,5 @@ There is no Svelte/React layer. When a page genuinely needs client behaviour, ad
 - Minimize client-side JavaScript — the default is zero JS shipped
 - Import and use global CSS styles from layouts
 - Always include a `data-testid` on interactive elements (see `ui.instructions.md`)
+- Use comments only for non-obvious intent or decisions; do not narrate
+  straightforward markup.
